@@ -9,8 +9,8 @@ import jwt
 
 # Load environment variables from .env file''
 status = load_dotenv()
-if not status:
-    raise ValueError("Failed to load environment variables from .env file.")
+#if not status:
+#    raise ValueError("Failed to load environment variables from .env file.")
 
 
 # Get your Supabase credentials from environment variables
