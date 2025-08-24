@@ -16,8 +16,8 @@ status = load_dotenv()
 # Get your Supabase credentials from environment variables
 url = os.environ.get('SUPABASE_URL')
 key = os.environ.get('SERVICE_ROLE_KEY')
-if not url or not key:
-    raise ValueError("Supabase URL, JWT or Key must be set in the environment variables.")
+#if not url or not key:
+ #   raise ValueError("Supabase URL, JWT or Key must be set in the environment variables.")
 
 
 # Create the Supabase client
@@ -25,8 +25,8 @@ supabase: Client = create_client(url, key)
 
 
 jwt_secret = os.getenv('SUPABASE_JWT_SECRET')
-if not jwt_secret:
-    raise ValueError("Supabase JWT must be set in the environment variables.",url,key,jwt)
+#if not jwt_secret:
+  #  raise ValueError("Supabase JWT must be set in the environment variables.",url,key,jwt)
 
 
 # app instance
@@ -411,5 +411,5 @@ def get_accounts():
             return jsonify({'error': str(e)}), 500
 
 
-if __name__ == "__main__":
-    app.run() #debug=True, port=5000
+#if __name__ == "__main__":
+   # app.run() #debug=True, port=5000
