@@ -9,15 +9,15 @@ import jwt
 
 # Load environment variables from .env file''
 status = load_dotenv()
-#if not status:
-#    raise ValueError("Failed to load environment variables from .env file.")
+if not status:
+    raise ValueError("Failed to load environment variables from .env file.")
 
 
 # Get your Supabase credentials from environment variables
 url = os.environ.get('SUPABASE_URL')
 key = os.environ.get('SERVICE_ROLE_KEY')
-#if not url or not key:
- #   raise ValueError("Supabase URL, JWT or Key must be set in the environment variables.")
+if not url or not key:
+    raise ValueError("Supabase URL, JWT or Key must be set in the environment variables.")
 
 
 # Create the Supabase client
@@ -25,13 +25,24 @@ supabase: Client = create_client(url, key)
 
 
 jwt_secret = os.getenv('SUPABASE_JWT_SECRET')
-#if not jwt_secret:
-  #  raise ValueError("Supabase JWT must be set in the environment variables.",url,key,jwt)
+if not jwt_secret:
+    raise ValueError("Supabase JWT must be set in the environment variables.",url,key,jwt)
 
 
 # app instance
 app = Flask(__name__)
-CORS(app, resources={r'/api/*': {"origins": "http://localhost:3000"}}) 
+CORS(app, resources={r"/api/*": {
+    "origins": [
+        "http://localhost:3000",
+        "https://inventory-pro-opal.vercel.app"
+    ]
+}}, supports_credentials=True)
+
+# Health check route
+@app.route('/')
+def health():
+    return jsonify({'status': 'ok', 'message': 'Backend is running'}), 200
+
 
 
 @app.route('/api/Ledger', methods=['GET', 'POST'])
@@ -411,5 +422,5 @@ def get_accounts():
             return jsonify({'error': str(e)}), 500
 
 
-#if __name__ == "__main__":
-   # app.run() #debug=True, port=5000
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000, debug=True)
