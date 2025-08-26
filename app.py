@@ -31,8 +31,10 @@ jwt_secret = os.getenv('SUPABASE_JWT_SECRET')
 
 # app instance
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "https://inventory-pro-opal.vercel.app"}}, supports_credentials=True)
-
+CORS(app, resources={r"/api/*": {"origins": ["https://inventory-pro-self.vercel.app",
+                                             "https://inventory-pro-opal.vercel.app",
+                                             "https://localhost:3000"]}}, supports_credentials=True)
+ 
 # Health check route
 @app.route('/')
 def health():
