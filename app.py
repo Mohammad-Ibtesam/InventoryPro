@@ -358,7 +358,7 @@ def get_or_create_Transactions():
         try:
             data = request.get_json()
             print(data)
-            if not all(key in data for key in ['item_name', 'type', 'quantity', 'unit_price', 'total_price', 'customer_supplier', 'Status']):
+            if not all(key in data for key in ['item_name', 'type', 'quantity', 'unit_price', 'total_price', 'customer_supplier']):
                 return jsonify({'error': 'Missing required fields'}), 400
             product_id = get_inventory_id(data['item_name'])
             if not product_id:
@@ -375,7 +375,7 @@ def get_or_create_Transactions():
                 'total_price': data['total_price'],
                 'remarks': data.get('remarks'),
                 'customer_supplier': data['customer_supplier'],
-                'Status': data['Status']
+                'Status': 'completed'
             }).execute()
             if not result.data:
                 return jsonify({'error': 'Failed to insert transaction, no data returned'}), 500
